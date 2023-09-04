@@ -1,11 +1,11 @@
 using JSON
 using MakeWebJSON
-user = JSON.parsefile("./src/createWebJSON/user.json")
+user = JSON.parsefile("user.json")
 
 
 df = query_postgres("processedarticles")
 
-j =  createWebJSON(user, df)
+j =  create_web_JSON(user, df, "2023-01-01")
 
 open("user_web_example.json", "w") do f
     write(f, JSON.json(j))

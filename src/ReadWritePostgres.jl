@@ -59,3 +59,12 @@ function load_processed_data(net_df)
     execute(conn, "COMMIT;")
 end
 
+
+"""
+creates a LibPQ connection String
+"""
+function get_connection(;path="connection.json")
+    conn_d = JSON.parsefile(path)
+    conn = string([string(p, "=", k, " ") for (p,k) in pairs(conn_d)]...)
+end
+
