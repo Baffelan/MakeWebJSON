@@ -6,16 +6,15 @@
 ```julia
 using JSON
 using MakeWebJSON
-user = JSON.parsefile("user.json")
+using Dates
 
-
-df = query_postgres("processedarticles")
-
-j =  create_web_JSON(user, df, "2023-01-01")
+j =  create_web_JSON("001", date=Date("2023-01-01")) # Note that default date is date=today()
 
 open("user_web_example.json", "w") do f
     write(f, JSON.json(j))
 end
+
+
 
 ```
 Note that the only functions exported by MakeWebJSON are query_postgres, and create_web_JSON

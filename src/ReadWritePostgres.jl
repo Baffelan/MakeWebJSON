@@ -10,14 +10,18 @@ condition is an optional argument that is joined at the end of the query and wil
 
 test is a bool where if true, the query string is returned rather than executing the query.
 """
-function query_postgres(table::String; condition::String="", test::Bool=false)
+function query_postgres(table::String; condition::String="", test::Bool=false, sorted::Bool=true)
     q = "SELECT * FROM $(table) $(condition)"
     if test
         return q
     else
         conn = LibPQ.Connection(get_connection())
         result = execute(conn, q)
-        arts = sort(DataFrame(result),:date)
+        if sorted
+            arts = sort(DataFrame(result),:date)
+        else
+            arts=DataFrame(result)
+        end
         close(conn);
         return arts
     end
@@ -58,6 +62,29 @@ function load_processed_data(net_df)
 
     execute(conn, "COMMIT;")
 end
+
+
+
+function add_new_user(user_dict)
+    conn = LibPQ.Connection(get_connection())
+    execute(conn, "BEGIN;")
+    
+    LibPQ.load!(
+        (
+            ID=[user_dict["ID"]], 
+            name=[user_dict["name"]],
+            information=[user_dict["information"]], 
+            keywords=[parse_array(user_dict["keywords"])],
+            location=[user_dict["location"]]
+        ),
+        conn,
+        "INSERT INTO Users (ID, name, information, keywords, location) VALUES (\$1, \$2, \$3, \$4, \$5);"
+    );
+
+    execute(conn, "COMMIT;")
+end
+
+
 
 
 """

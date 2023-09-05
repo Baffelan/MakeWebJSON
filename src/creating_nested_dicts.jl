@@ -99,9 +99,11 @@ end
 
 
 
+parse_kw_array(str) = rsplit(replace(replace(str, "{"=>""), "}"=>""),",")
+
 function create_keywords_dict(df, user, date)
     keyword_dict = OrderedDict()
-    words = vcat(user["keywords"], "aggregated")
+    words = vcat(string.(parse_kw_array(user[:keywords])), "aggregated")
     for word in words
         keyword_dict[word]=create_word_dict(df, word, date)
     end
