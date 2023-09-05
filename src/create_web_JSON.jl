@@ -24,6 +24,3 @@ function create_web_JSON(userID::String; date::Date=today())
     return j
 end
 
-
-using Pkg
-Pkg.add(path="https://github.com/Baffelan/WritePostgres.jl")
