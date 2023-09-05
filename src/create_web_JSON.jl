@@ -2,9 +2,9 @@ using JSON
 using OrderedCollections
 using DataFrames
 using Dates
+import WritePostgres.user_from_id, WritePostgres.query_postgres, WritePostgres.get_connection  
 
 include("creating_nested_dicts.jl")
-include("ReadWritePostgres.jl")
 
 function create_web_JSON(userID::String; date::Date=today())    
     user = user_from_id(userID)
@@ -25,3 +25,5 @@ function create_web_JSON(userID::String; date::Date=today())
 end
 
 
+using Pkg
+Pkg.add(path="https://github.com/Baffelan/WritePostgres.jl")
