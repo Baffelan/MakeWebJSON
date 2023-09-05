@@ -1,5 +1,6 @@
 using Dates
 using Languages
+using LibPQ
 
 
 function previous_sentiments(word_df, date)
