@@ -24,3 +24,10 @@ function create_web_JSON(userID::String; date::Date=today())
     return j
 end
 
+# j = create_web_JSON("001", date=Date("2023-01-01"))
+
+
+# j["data"]["keywords"]["metaverse"]
+
+
+
