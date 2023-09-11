@@ -32,7 +32,7 @@ end
 #parse_interest(str) = rsplit(str[2:end-1], "{"
 
 function get_interest(word)
-    ds = OrderedDict.(JSON.parsefile("interest.json"))
+    # ds = OrderedDict.(JSON.parsefile("interest.json"))
     ret = OrderedDict()
     # for d in ds
     #     if lowercase(d["keyword"])==word
