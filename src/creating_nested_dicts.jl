@@ -116,7 +116,8 @@ end
 
 function create_keywords_dict(df, user, date)
     keyword_dict = OrderedDict()
-    words = replace.(vcat(user[:keywords]..., string(user[:id],"_aggregated")), ["\""=>""])
+
+    words = unique(df.keyword)
     println(words)
     for word in words
         keyword_dict[word]=create_word_dict(df, word, date)
