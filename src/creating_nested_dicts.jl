@@ -61,12 +61,12 @@ function create_news_article_array(word_df, date)
     
     
     if length(arts)>1
-        conn = LibPQ.Connection(get_connection())
+        conn = LibPQ.Connection(get_back_connection())
         result = execute(conn, replace("SELECT * FROM newsapi WHERE uri IN $(arts)","\""=>"'"))
         arts = DataFrame(result)
         close(conn); 
     elseif length(arts[1])>0
-        conn = LibPQ.Connection(get_connection())
+        conn = LibPQ.Connection(get_back_connection())
         result = execute(conn, replace("SELECT * FROM newsapi WHERE uri IN ('$(arts[1])')","\""=>"'"))
         arts = DataFrame(result)
         close(conn);
