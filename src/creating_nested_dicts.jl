@@ -11,7 +11,7 @@ end
 
 
 function create_surprise_dict(word_df, date)    
-    day_changes = word_df[word_df.date.==date, :word_changes]
+    day_changes = word_df[word_df.date.==date, :word_change]
     
     change_dict = OrderedDict([k=>v for (k,v) in pairs(JSON.parse(day_changes[1])) if !in(k,stopwords(Languages.English())) ])
 
