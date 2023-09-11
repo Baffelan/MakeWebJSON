@@ -57,8 +57,8 @@ function article_row_to_dict(row)
 end
 
 function create_news_article_array(word_df, date)
-    articles = word_df[word_df.date.==date, :articles][1]
-    arts = Tuple(rsplit(articles[2:end-1],","))
+    arts = word_df[word_df.date.==date, :articles][1]
+    
     
     if length(arts)>1
         conn = LibPQ.Connection(get_connection())
