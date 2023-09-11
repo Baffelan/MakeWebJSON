@@ -114,7 +114,7 @@ end
 
 
 
-function create_keywords_dict(df, user, date)
+function create_keywords_dict(df, date)
     keyword_dict = OrderedDict()
 
     words = unique(df.keyword)
@@ -125,6 +125,6 @@ function create_keywords_dict(df, user, date)
     return keyword_dict
 end
 
-function create_data_dict(df, user, date)
-    return OrderedDict("keywords"=>create_keywords_dict(df, user,Date(date)))
+function create_data_dict(df, date)
+    return OrderedDict("keywords"=>create_keywords_dict(df,Date(date)))
 end

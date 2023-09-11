@@ -19,7 +19,7 @@ function create_web_JSON(userID::String, df; date::Date=today())
 
     # j["customer_information"]=user[:information]
 
-    j["data"] = create_data_dict(df, user, date)
+    j["data"] = create_data_dict(df, date)
 
     return j
 end
