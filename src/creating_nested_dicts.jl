@@ -20,7 +20,7 @@ end
 
 
 function create_news_word_cloud(word_df, date)    
-    day_cloud = word_df[word_df.date.==date, :word_cloud]
+    day_cloud = word_df[word_df.date.==date, :word_count]
     
     cloud_dict = OrderedDict([k=>v for (k,v) in pairs(JSON.parse(day_cloud[1])) if !in(k,stopwords(Languages.English())) ])
 
