@@ -74,7 +74,6 @@ function create_news_article_array(word_df, date)
 end
 
 function create_news_dict(word_df, date)
-    println("pint")
     news_dict = OrderedDict()
     
     news_dict["news_sentiment_average"] = []

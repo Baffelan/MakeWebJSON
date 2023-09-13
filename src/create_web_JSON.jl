@@ -2,7 +2,6 @@
 
 function create_web_JSON(userID::Int, collectionID::Int, df; date::Date=today())    
     # user = user_from_id(userID)
-
     # df = query_postgres("processedarticles")
 
     j = OrderedDict()
@@ -10,7 +9,6 @@ function create_web_JSON(userID::Int, collectionID::Int, df; date::Date=today())
     j["customer_id"]=userID
 
     # j["customer_name"]=user[:name]
-
     # j["customer_information"]=user[:information]
 
     j["data"] = create_data_dict(df, date)
