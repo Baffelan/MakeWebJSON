@@ -1,12 +1,4 @@
-using JSON
-using OrderedCollections
-using DataFrames
-using Dates
-using LibPQ
-using TimeZones
-using WritePostgres
 
-include("creating_nested_dicts.jl")
 
 function create_web_JSON(userID::Int, collectionID::Int, df; date::Date=today())    
     # user = user_from_id(userID)
