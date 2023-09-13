@@ -32,22 +32,22 @@ function create_web_JSON(userID::Int, collectionID::Int, df; date::Date=today())
 
     execute(conn, "COMMIT;")
 end
-conn = LibPQ.Connection(WritePostgres.get_forward_connection())
-execute(conn, "BEGIN;")
-LibPQ.load!(
-    (
-        userID=[999], 
-        collectionID=[1],
-        editionDate=[now(localzone())],
-        papers=j 
+# conn = LibPQ.Connection(WritePostgres.get_forward_connection())
+# execute(conn, "BEGIN;")
+# LibPQ.load!(
+#     (
+#         userID=[999], 
+#         collectionID=[1],
+#         editionDate=[now(localzone())],
+#         papers=j 
 
-    ),
-    conn,
-    "INSERT INTO api.papers (userID, collectionID, editionDate, papers) VALUES (\$1, \$2, \$3, \$4);"
-);
+#     ),
+#     conn,
+#     "INSERT INTO api.papers (userID, collectionID, editionDate, papers) VALUES (\$1, \$2, \$3, \$4);"
+# );
 
-execute(conn, "COMMIT;")
-j = JSON.parsefile("user_web_socialmedia.json")
+# execute(conn, "COMMIT;")
+# j = JSON.parsefile("user_web_socialmedia.json")
 
 
 # j = create_web_JSON("001", date=Date("2023-01-01"))
