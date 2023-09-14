@@ -31,7 +31,7 @@ function create_web_JSON(userID::Int, collectionID::Int, df; date::Date=today())
             userID=[userID], 
             collectionID=[collectionID],
             editionDate=[now(localzone())],
-            papers=j 
+            papers=[JSON.json(j)]
 
         ),
         conn,
@@ -40,24 +40,14 @@ function create_web_JSON(userID::Int, collectionID::Int, df; date::Date=today())
 
     execute(conn, "COMMIT;")
 end
-conn = LibPQ.Connection(WritePostgres.get_forward_connection())
-execute(conn, "BEGIN;")
-LibPQ.load!(
-    (
-        userID=[999], 
-        collectionID=[1],
-        editionDate=[now(localzone())],
-        papers=j 
-
-    ),
-    conn,
-    "INSERT INTO api.papers (userID, collectionID, editionDate, papers) VALUES (\$1, \$2, \$3, \$4);"
-);
-
-execute(conn, "COMMIT;")
-j = JSON.parsefile("user_web_socialmedia.json")
 
 
+df = query_postgres("processedarticles", "back", condition="where user_id='999' and date='2023-08-09'")
+
+df.anomalous_day
+query_postgres("api.papers", "forward", sorted=false)
+create_web_JSON(999, 1, df, date=Date("2023-08-09"))
+get_forward_connection()
 # j = create_web_JSON("001", date=Date("2023-01-01"))
 
 

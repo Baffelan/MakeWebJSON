@@ -12,7 +12,7 @@ end
 
 
 function create_surprise_dict(word_df, date)    
-    day_changes = word_df[word_df.date.==date, :word_change]
+    day_changes = word_df[word_df.date.==date, :word_changes]
     
     change_dict = OrderedDict([k=>v for (k,v) in pairs(day_changes[1]) if !in(k,stopwords(Languages.English())) ])
 
@@ -21,7 +21,7 @@ end
 
 
 function create_news_word_cloud(word_df, date)    
-    day_cloud = word_df[word_df.date.==date, :word_count]
+    day_cloud = word_df[word_df.date.==date, :word_cloud]
     
     cloud_dict = OrderedDict([k=>v for (k,v) in pairs(day_cloud[1]) if !in(k,stopwords(Languages.English())) ])
 
@@ -61,9 +61,13 @@ function create_news_article_array(word_df, date)
     arts = word_df[word_df.date.==date, :articles][1]
     
     
+    
     if length(arts)>1
         conn = LibPQ.Connection(get_back_connection())
-        result = execute(conn, replace("SELECT * FROM raw WHERE uri IN $(arts)","\""=>"'"))
+        q = replace("SELECT * FROM raw WHERE uri IN $(arts)","{"=>"('")
+        q = replace(q, ","=>"','")
+        q = replace(q, "}"=>"')")
+        result = execute(conn, q)
         arts = DataFrame(result)
         close(conn); 
     elseif length(arts[1])>0
