@@ -1,8 +1,3 @@
-using Dates
-using Languages
-using LibPQ
-using OrderedCollections
-using WritePostgres
 
 
 function previous_sentiments(word_df, date)
@@ -29,20 +24,6 @@ function create_news_word_cloud(word_df, date)
 end
 
 
-
-#parse_interest(str) = rsplit(str[2:end-1], "{"
-
-function get_interest(word)
-    # ds = OrderedDict.(JSON.parsefile("interest.json"))
-    ret = OrderedDict()
-    # for d in ds
-    #     if lowercase(d["keyword"])==word
-    #         ret=d
-    #     end
-    # end
-    return ret 
-
-end
 
 function article_row_to_dict(row)
     d = OrderedDict()
@@ -83,7 +64,6 @@ function create_news_article_array(word_df, date)
 end
 
 function create_news_dict(word_df, date)
-    println("pint")
     news_dict = OrderedDict()
     
     news_dict["news_sentiment_average"] = []
@@ -94,24 +74,17 @@ function create_news_dict(word_df, date)
 end
 
 function create_word_dict(df, word, date)
-    word_dict = OrderedDict()
-    word_dict["keyword_name"]=word
+    println("Collecting information for keyword: ", word)
 
     word_df = df[df.keyword.==word, :]
 
+    word_dict = OrderedDict()
+    word_dict["keyword_name"]=word
     word_dict["sentiment"] = previous_sentiments(word_df, date)
-    println(word)
     word_dict["anomalous"] = word_df[word_df.date.==date,:anomalous_day][1]
-
     word_dict["surprise_words"] = create_surprise_dict(word_df, date)
-
-    word_dict["interest"] = get_interest(word)
-
     word_dict["news_word_cloud"] = create_news_word_cloud(word_df, date)
-
     word_dict["news"] = create_news_dict(word_df, date)
-
-
 
     return word_dict
 end
