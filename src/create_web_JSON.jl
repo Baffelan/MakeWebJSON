@@ -12,7 +12,7 @@ function create_web_JSON(userID::Int, collectionID::Int, df; date::Date=today())
     # j["customer_information"]=user[:information]
 
     j["data"] = create_data_dict(df, date)
-
+    
     conn = LibPQ.Connection(get_forward_connection())
     execute(conn, "BEGIN;")
     
@@ -20,7 +20,7 @@ function create_web_JSON(userID::Int, collectionID::Int, df; date::Date=today())
         (
             userID=[userID], 
             collectionID=[collectionID],
-            editionDate=[now(localzone())],
+            editionDate=[now(localzone())-Day(1)],
             papers=[JSON.json(j)]
 
         ),
@@ -32,12 +32,12 @@ function create_web_JSON(userID::Int, collectionID::Int, df; date::Date=today())
 end
 
 
-df = query_postgres("processedarticles", "back", condition="where user_id='999' and date='2023-08-09'")
+# df = query_postgres("processedarticles", "back", condition="where user_id='999' and date='2023-08-09'")
 
-df.anomalous_day
-query_postgres("api.papers", "forward", sorted=false)
-create_web_JSON(999, 1, df, date=Date("2023-08-09"))
-get_forward_connection()
+# df.anomalous_day
+# query_postgres("api.papers", "forward", sorted=false)
+# create_web_JSON(999, 1, df, date=Date("2023-08-09"))
+# get_forward_connection()
 # conn = LibPQ.Connection(WritePostgres.get_forward_connection())
 # execute(conn, "BEGIN;")
 # LibPQ.load!(

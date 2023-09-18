@@ -8,19 +8,17 @@ end
 
 function create_surprise_dict(word_df, date)    
     day_changes = word_df[word_df.date.==date, :word_changes]
-    
-    change_dict = OrderedDict([k=>v for (k,v) in pairs(day_changes[1]) if !in(k,stopwords(Languages.English())) ])
-
-    sort(change_dict,byvalue=true,rev=true)
+    change_dict = OrderedDict([k=>v for (k,v) in pairs(JSON.parse(day_changes[1])) if ((!in(k,stopwords(Languages.English()))) && length(k)>1) ])
+    OrderedDict([i for i in sort(change_dict,byvalue=true,rev=true)][1:20]...)
 end
 
 
 function create_news_word_cloud(word_df, date)    
     day_cloud = word_df[word_df.date.==date, :word_cloud]
     
-    cloud_dict = OrderedDict([k=>v for (k,v) in pairs(day_cloud[1]) if !in(k,stopwords(Languages.English())) ])
+    cloud_dict = OrderedDict([k=>v for (k,v) in pairs(JSON.parse(day_cloud[1])) if ((!in(k,stopwords(Languages.English()))) && length(k)>1) ])
 
-    sort(cloud_dict,byvalue=true,rev=true)
+    OrderedDict([i for i in sort(cloud_dict,byvalue=true,rev=true)][1:50]...)
 end
 
 
@@ -60,7 +58,7 @@ function create_news_article_array(word_df, date)
         arts = DataFrame()
     end
     
-    return article_row_to_dict.([r for r in eachrow(arts) if r.date==date])
+    return article_row_to_dict.([r for r in eachrow(arts[1:min(10,nrow(arts)),:]) if r.date==date])
 end
 
 function create_news_dict(word_df, date)
