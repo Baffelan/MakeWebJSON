@@ -13,13 +13,15 @@ function create_surprise_dict(word_df, date)
 end
 
 
-function create_news_word_cloud(word_df, date)    
+function create_news_word_cloud_dict(word_df, date)    
     day_cloud = word_df[word_df.date.==date, :word_cloud]
     
     cloud_dict = OrderedDict([k=>v for (k,v) in pairs(JSON.parse(day_cloud[1])) if ((!in(k,stopwords(Languages.English()))) && length(k)>1) ])
 
     OrderedDict([i for i in sort(cloud_dict,byvalue=true,rev=true)][1:50]...)
 end
+
+
 
 
 
@@ -83,7 +85,7 @@ function create_word_dict(df, word, date)
     word_dict["anomalous"] = word_df[word_df.date.==date,:anomalous_day][1]
     println("not here")
     word_dict["surprise_words"] = create_surprise_dict(word_df, date)
-    word_dict["news_word_cloud"] = create_news_word_cloud(word_df, date)
+    word_dict["news_word_cloud"] = create_news_word_cloud_dict(word_df, date)
     word_dict["news"] = create_news_dict(word_df, date)
 
     return word_dict
