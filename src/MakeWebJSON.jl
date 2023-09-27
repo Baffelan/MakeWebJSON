@@ -9,7 +9,7 @@ module MakeWebJSON
     using Languages
 
     include("creating_nested_dicts.jl")
+    include("create_web_JSON.jl")
 
     export create_web_JSON
-    include("create_web_JSON.jl")
 end

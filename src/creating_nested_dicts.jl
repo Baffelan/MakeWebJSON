@@ -79,7 +79,9 @@ function create_word_dict(df, word, date)
     word_dict = OrderedDict()
     word_dict["keyword_name"]=word
     word_dict["sentiment"] = previous_sentiments(word_df, date)
+    println("here")
     word_dict["anomalous"] = word_df[word_df.date.==date,:anomalous_day][1]
+    println("not here")
     word_dict["surprise_words"] = create_surprise_dict(word_df, date)
     word_dict["news_word_cloud"] = create_news_word_cloud(word_df, date)
     word_dict["news"] = create_news_dict(word_df, date)
