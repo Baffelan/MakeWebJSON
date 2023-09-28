@@ -11,7 +11,7 @@ function create_web_JSON(userID::Int, collectionID::Int, df; date::Date=today())
     # j["customer_name"]=user[:name]
     # j["customer_information"]=user[:information]
 
-    j["data"] = create_data_dict(df, date)
+    j["data"] = create_data_dict(df, date-Day(1))
     
     conn = LibPQ.Connection(get_forward_connection())
     execute(conn, "BEGIN;")
