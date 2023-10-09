@@ -1,4 +1,4 @@
-name = "MakeWebJSON"
+name = "IOM_MakeWebJSON"
 uuid = "b8c3da20-68e7-4c44-b027-8b22a1b9608c"
 authors = ["Connor Smith"]
 version = "1.0.0-DEV"

@@ -1,4 +1,4 @@
-module MakeWebJSON
+module IOM_MakeWebJSON
     using JSON
     using OrderedCollections
     using DataFrames
