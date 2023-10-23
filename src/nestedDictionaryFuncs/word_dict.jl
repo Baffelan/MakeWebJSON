@@ -1,5 +1,6 @@
 function word_dict(df, word, date)
     println("Collecting information for keyword: ", word)
+    println("For date: ", date)
 
     word_df = df[df.keyword.==word, :]
 
